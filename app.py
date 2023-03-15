@@ -38,7 +38,7 @@ def handle_post():
 
 if __name__ == '__main__':
     context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    context.load_cert_chain('/server.crt', '/private.key')
+    context.load_cert_chain('/app/server.crt', '/app/private.key')
     app.run(host='0.0.0.0', port=8888, ssl_context=context)
 
 
