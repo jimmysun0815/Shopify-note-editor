@@ -10,7 +10,9 @@ def edit_order(order_number):
     token = os.environ.get('SHOPIFY_TOKEN')
     store_url = os.environ.get('SHOPIFY_URL')
     product_list = ['CALCITE', 'CARNELIAN', 'AGATE', 'FLUORITE', 'JASPER', 'SODALITE', 'YOOPERLITE', 'AVENTURINE', 'PORKSTONE', 'OPAL', 'LEPIDOLITE', 'AMETHYST', 'MOONSTONE', 'QUARTZ']
-    pick_no = 4
+    print(get_response.content)
+    item_no = json.loads(get_response.content)['order']['item_no']
+    pick_no = 4 * int(item_no)
     endpoint = f"https://{store_url}/admin/api/2023-01/orders/{order_number}.json"
 
     # Find the order by its order number
@@ -18,7 +20,10 @@ def edit_order(order_number):
     note = json.loads(get_response.content)['order']['note']
     if note is None:
         note = 'Thanks for order!'
-    selected_items = random.sample(product_list, pick_no)
+    if pick_no > 14:
+        selected_items = product_list
+    else:
+        selected_items = random.sample(product_list, pick_no)
     data = {
         'order': {
             "id": order_number,
