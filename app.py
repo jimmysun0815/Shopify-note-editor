@@ -40,8 +40,10 @@ def handle_post():
     data = request.get_data(as_text=True)
     print(data)
     order_number = json.loads(data)['id']
-    item_no = json.loads(data)['item_no']
-
+    items = json.loads(data)['line_items']
+    item_no = 0
+    for i in items:
+        item_no += i['quantity']
     edit_order(order_number, item_no)
     return 'success'
 
