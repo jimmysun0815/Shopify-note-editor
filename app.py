@@ -16,6 +16,8 @@ def edit_order(order_number):
     # Find the order by its order number
     get_response = requests.get(endpoint, headers={"X-Shopify-Access-Token": token})
     note = json.loads(get_response.content)['order']['note']
+    if note is None:
+        note = 'Thanks for order!'
     selected_items = random.sample(product_list, pick_no)
     data = {
         'order': {
