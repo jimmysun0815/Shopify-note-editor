@@ -5,7 +5,7 @@ import requests
 from flask import Flask, request
 import os
 
-def edit_order(order_number):
+def edit_order(order_number, item_no):
     # Connect to the Shopify store
     token = os.environ.get('SHOPIFY_TOKEN')
     store_url = os.environ.get('SHOPIFY_URL')
@@ -14,8 +14,6 @@ def edit_order(order_number):
 
     # Find the order by its order number
     get_response = requests.get(endpoint, headers={"X-Shopify-Access-Token": token})
-    print(get_response.content)
-    item_no = json.loads(get_response.content)['order']['item_no']
     pick_no = 4 * int(item_no)
     note = json.loads(get_response.content)['order']['note']
     if note is None:
@@ -40,8 +38,11 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def handle_post():
     data = request.get_data(as_text=True)
+    print(data)
     order_number = json.loads(data)['id']
-    edit_order(order_number)
+    item_no = json.loads(data)['item_no']
+
+    edit_order(order_number, item_no)
     return 'success'
 
 if __name__ == '__main__':
