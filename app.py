@@ -25,7 +25,7 @@ def edit_order(order_number, item_no):
     data = {
         'order': {
             "id": order_number,
-            'note': note + '\n' + '=================' + '\n' + 'Let your constellation sign guide you, SoulNewMe Al have found [ ' +' '.join(selected_items) + ' ] is a prefect fit you!' 
+            'note': note + '\n' + '=================' + '\n' + 'Let your constellation sign guide you, AI have found [ ' +' '.join(selected_items) + ' ] is a prefect fit you!' 
              
         }
     }  
